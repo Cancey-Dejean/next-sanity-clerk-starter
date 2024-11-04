@@ -1,19 +1,15 @@
 import "../globals.css";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { draftMode } from "next/headers";
-import { VisualEditing, toPlainText } from "next-sanity";
-import { Toaster } from "sonner";
 
 import * as demo from "@/sanity/lib/demo";
-import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { sanityFetch } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
-import { LiveErrorBoundary } from "@/components/LiveErrorBoundary";
-import DraftModeToast from "@/components/DraftModeToast";
-import Header from "@/components/Header";
+
+import Header from "@/components/ui/Header";
 import Footer from "@/components/Footer";
+import { toPlainText } from "next-sanity";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: settings } = await sanityFetch({
@@ -46,19 +42,13 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="grid min-h-[100dvh] grid-rows-[1fr_auto]">
+    <div className="grid min-h-[100dvh] grid-rows-[auto_1fr_auto]">
       <Header />
       <main>{children}</main>
       <Footer />

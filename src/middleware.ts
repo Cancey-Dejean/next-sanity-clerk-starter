@@ -1,6 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isProtected = createRouteMatcher(["/dashboard", "/create-sanity-user"]);
+const isProtected = createRouteMatcher([
+  "/dashboard",
+  "/api/create-sanity-user",
+]);
 
 export default clerkMiddleware(async (auth, request) => {
   if (isProtected(request)) {

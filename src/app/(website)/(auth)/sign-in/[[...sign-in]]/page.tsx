@@ -8,9 +8,9 @@ export default async function Page({
 }) {
   const { redirectUrl } = await searchParams;
   return (
-    <section className="flex h-dvh items-center justify-center">
+    <section className="flex h-full items-center justify-center">
       <Container className="flex items-center justify-center">
-        <SignIn fallbackRedirectUrl={redirectUrl || "/"} />
+        <SignIn forceRedirectUrl={redirectUrl || "/"} />
       </Container>
     </section>
   );

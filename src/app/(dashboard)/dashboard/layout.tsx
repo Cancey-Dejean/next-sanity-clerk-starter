@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import "../../globals.css";
 import Providers from "@/components/providers";
-import { geistMono, geistSans } from "@/utils/fonts";
-
 import AppSidebar from "../_components/app-sidebar";
-import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Create Next App",

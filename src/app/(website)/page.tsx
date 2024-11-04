@@ -53,7 +53,6 @@ export default async function Page() {
                 </svg>
               </Link>
             </div>
-            <Link href="/sign-up">Sign Up</Link>
           </div>
         </div>
       </div>
