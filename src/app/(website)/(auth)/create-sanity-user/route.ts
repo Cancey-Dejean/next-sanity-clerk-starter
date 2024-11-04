@@ -22,3 +22,11 @@ export const GET = async (req: NextApiRequest) => {
   const url = req.url?.split("/create-sanity-user")[0] || "/";
   return NextResponse.redirect(url);
 };
+
+// import { currentUser } from "@clerk/nextjs/server";
+// import { NextResponse } from "next/server";
+
+// export const GET = async () => {
+//   const user = await currentUser();
+//   return NextResponse.json({ user });
+// };

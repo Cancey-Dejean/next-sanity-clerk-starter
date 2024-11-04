@@ -1,11 +1,22 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
-
+import { type PortableTextBlock } from "next-sanity";
 import { Suspense } from "react";
-
 import { sanityFetch } from "@/sanity/lib/live";
+import { postPagesSlugs, postQuery } from "@/sanity/lib/queries";
+import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import Avatar from "@/components/Avatar";
+import CoverImage from "@/components/CoverImage";
+import PortableText from "@/components/PortableText";
+import { MorePosts } from "@/components/Posts";
 
-import { POST_BY_SLUG_QUERY } from "@/sanity/lib/queries";
+// import Avatar from "@/app/components/Avatar";
+// import CoverImage from "@/app/components/CoverImage";
+// import { MorePosts } from "@/app/components/Posts";
+// import PortableText from "@/app/components/PortableText";
+// import { sanityFetch } from "@/sanity/lib/live";
+// import { postPagesSlugs, postQuery } from "@/sanity/lib/queries";
+// import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -13,7 +24,7 @@ type Props = {
 
 export async function generateStaticParams() {
   const { data } = await sanityFetch({
-    query: POST_BY_SLUG_QUERY,
+    query: postPagesSlugs,
     perspective: "published",
     stega: false,
   });
@@ -26,7 +37,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const params = await props.params;
   const { data: post } = await sanityFetch({
-    query: POST_BY_SLUG_QUERY,
+    query: postQuery,
     params,
     stega: false,
   });
@@ -49,7 +60,7 @@ export async function generateMetadata(
 export default async function PostPage(props: Props) {
   const params = await props.params;
   const [{ data: post }] = await Promise.all([
-    sanityFetch({ query: POST_BY_SLUG_QUERY, params }),
+    sanityFetch({ query: postQuery, params }),
   ]);
 
   if (!post?._id) {
@@ -67,7 +78,25 @@ export default async function PostPage(props: Props) {
                   {post.title}
                 </h2>
               </div>
+              <div className="flex max-w-3xl items-center gap-4">
+                {post.author &&
+                  post.author.firstName &&
+                  post.author.lastName && (
+                    <Avatar person={post.author} date={post.date} />
+                  )}
+              </div>
             </div>
+            <article className="grid max-w-4xl gap-6">
+              <div className="">
+                <CoverImage image={post.coverImage} priority />
+              </div>
+              {post.content?.length && (
+                <PortableText
+                  className="max-w-2xl"
+                  value={post.content as PortableTextBlock[]}
+                />
+              )}
+            </article>
           </div>
         </div>
       </div>
@@ -75,8 +104,7 @@ export default async function PostPage(props: Props) {
         <div className="container my-12 grid gap-12 lg:my-24">
           <aside>
             <Suspense>
-              MorePost
-              {/* <MorePosts skip={post._id} limit={2} /> */}
+              <MorePosts skip={post._id} limit={2} />
             </Suspense>
           </aside>
         </div>

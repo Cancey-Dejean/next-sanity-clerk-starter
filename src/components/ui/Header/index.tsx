@@ -16,7 +16,7 @@ export default function Header({
         <NavMenu />
 
         <div className="flex items-center gap-4">
-          <SignedOut>
+          {/* <SignedOut>
             <SignInButton>
               <Button>Sign Up</Button>
             </SignInButton>
@@ -24,7 +24,7 @@ export default function Header({
 
           <SignedIn>
             <UserButton />
-          </SignedIn>
+          </SignedIn> */}
         </div>
       </Container>
     </header>
