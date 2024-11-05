@@ -1,6 +1,6 @@
 import { groq } from "next-sanity";
 
-export const BUTTON_FIELDS = /* groq */ `
+export const buttonFields = /* groq */ `
    label,
    newTab,
    url,
@@ -36,6 +36,9 @@ export const headerFields = groq`
         },
       },
     },
+    cta [] {
+      ${buttonFields}
+    }
     // "logoImage": logo.asset->url,
     // "logoImageAlt": logo.alt,
   }
@@ -54,7 +57,7 @@ export const ALL_SETTINGS_QUERY = groq`{
 
 export const BUTTON_GROUP_FIELDS = /* groq */ `
   ctaButtons [] {
-    ${BUTTON_FIELDS}
+    ${buttonFields}
   }
 `;
 
