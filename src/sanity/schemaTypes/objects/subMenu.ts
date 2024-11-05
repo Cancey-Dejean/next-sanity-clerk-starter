@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 
 export const subMenuType = defineType({
   name: "subMenu",
-  title: "Links (Column)",
+  title: "Dropdown",
   type: "object",
   icon: Link,
   fields: [
@@ -14,16 +14,60 @@ export const subMenuType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "linkMenu",
+      name: "highlightList",
+      title: "Highlight List",
+      type: "object",
+      options: {
+        collapsible: true,
+      },
+      fields: [
+        defineField({
+          name: "featuredTitle",
+          title: "Featured Title",
+          type: "string",
+        }),
+        defineField({
+          name: "featuredDesc",
+          title: "Featured Description",
+          type: "text",
+        }),
+        // defineField({
+        //   name: "featuredImage",
+        //   title: "Featured Image",
+        //   type: "customImage",
+        // }),
+        // defineField({
+        //   name: "featuredDesc",
+        //   title: "Featured Description",
+        //   type: "te",
+        // }),
+        // defineField({
+        //   name: "items",
+        //   title: "Items",
+        //   type: "array",
+        //   of: [
+        //     {
+        //       name: "link",
+        //       title: "Menu Item",
+        //       type: "link",
+        //     },
+        //   ],
+        //   validation: (rule) => rule.min(1).max(3),
+        // }),
+      ],
+    }),
+    defineField({
+      name: "linkList",
+      title: "Link List",
       type: "array",
-      title: "Menu",
-      of: [{ type: "link" }],
-      validation: (rule) => rule.required().min(1),
+      of: [
+        {
+          type: "link",
+        },
+      ],
+      validation: (rule) => rule.required().min(1).max(3),
     }),
   ],
-  initialValue: {
-    label: "Link",
-  },
   preview: {
     select: {
       title: "label",

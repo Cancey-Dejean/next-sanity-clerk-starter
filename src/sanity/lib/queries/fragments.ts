@@ -25,20 +25,6 @@ export const headerFields = groq`
 
       _type == "subMenu" => {
         label,
-        linkMenu[] {
-          ${linkFields}
-        },
-      },
-
-      _type == "subMenuLinkGrid" => {
-        label,
-        linkMenu[] {
-          ${linkFields}
-        },
-      },
-
-      _type == "subMenuHighlight" => {
-        label,
         highlightList {
           featuredTitle,
           featuredDesc

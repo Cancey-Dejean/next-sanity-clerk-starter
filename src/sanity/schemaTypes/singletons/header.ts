@@ -22,12 +22,7 @@ export const headerType = defineType({
       name: "primaryMenu",
       type: "array",
       title: "Primary Menu",
-      of: [
-        { type: "navLink" },
-        { type: "subMenu" },
-        { type: "subMenuLinkGrid" },
-        { type: "subMenuHighlight" },
-      ],
+      of: [{ type: "navLink" }, { type: "subMenu" }],
     }),
     defineField({
       name: "cta",

@@ -22,6 +22,7 @@ export default async function Header({ header }: any) {
         </Link>
 
         <div className="absolute left-1/2 -translate-x-1/2">
+          {/* <NavMenu primaryMenu={primaryMenu} /> */}
           <NavMenu primaryMenu={primaryMenu} />
         </div>
 
