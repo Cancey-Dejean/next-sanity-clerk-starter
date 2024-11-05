@@ -1,11 +1,13 @@
 import Container from "@/components/ui/container";
 
-export default function Footer() {
+export default function Footer({ footer }: any) {
+  const { title } = footer;
+  console.log(footer);
   return (
     <footer className="border-t border-gray-100 bg-gray-50">
       <Container className="flex flex-col items-center justify-between py-28 lg:flex-row">
         <h3 className="mb-10 text-center text-4xl font-bold leading-tight tracking-tighter lg:mb-0 lg:pr-4 lg:text-left lg:text-5xl">
-          Built with Sanity + Next.js.
+          {title}
         </h3>
         <div className="l flex flex-col items-center justify-center gap-3 lg:flex-row lg:pl-4">
           <a

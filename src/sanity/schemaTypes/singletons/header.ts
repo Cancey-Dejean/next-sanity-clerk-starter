@@ -35,7 +35,7 @@ export const headerType = defineType({
       name: "showAuth",
       title: "Show Auth Buttons",
       type: "boolean",
-      initialValue: false,
+      initialValue: true,
     }),
   ],
   preview: {

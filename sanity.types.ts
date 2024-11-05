@@ -313,6 +313,14 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/sanity/lib/queries/fragments.ts
+// Variable: ALL_SETTINGS_QUERY
+// Query: {  "header": *[_type == "header"][0] {    showAuth,    primaryMenu[] {      _type,      _type == "navLink" => {          label,  description,  newTab,  url,      },      _type == "subMenu" => {        label,        highlightList {          featuredTitle,          featuredDesc        },        linkList[] {          description,            label,  description,  newTab,  url,        },      },    },    // "logoImage": logo.asset->url,    // "logoImageAlt": logo.alt,  },  "footer": *[_type == "footer"][0] {    title  }}
+export type ALL_SETTINGS_QUERYResult = {
+  header: null;
+  footer: null;
+};
+
 // Source: ./src/sanity/lib/queries/index.ts
 // Variable: settingsQuery
 // Query: *[_type == "settings"][0]
@@ -382,6 +390,7 @@ export type PagesSlugsResult = Array<never>;
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '{\n  \n"header": *[_type == "header"][0] {\n    showAuth,\n    primaryMenu[] {\n      _type,\n\n      _type == "navLink" => {\n        \n  label,\n  description,\n  newTab,\n  url,\n\n      },\n\n      _type == "subMenu" => {\n        label,\n        highlightList {\n          featuredTitle,\n          featuredDesc\n        },\n        linkList[] {\n          description,\n          \n  label,\n  description,\n  newTab,\n  url,\n\n        },\n      },\n    },\n    // "logoImage": logo.asset->url,\n    // "logoImageAlt": logo.alt,\n  }\n,\n  \n"footer": *[_type == "footer"][0] {\n    title\n  }\n\n}': ALL_SETTINGS_QUERYResult;
     '*[_type == "settings"][0]': SettingsQueryResult;
     '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    \n  _id,\n  metaTitle,\n  metaDescription,\n  "ogImg": ogImage.asset->url,\n  "slug": slug.current,\n  pageBuilder [] {\n    _type,\n    _key,\n    _type == "hero" => {\n      \n  topText,\n  headline,\n  subHeading,\n  copyPasteText,\n  hide,\n  \n  ctaButtons [] {\n    \n   label,\n   newTab,\n   url,\n   variant,\n   size\n\n  }\n\n\n    },\n  }\n,\n  }\n': GetPageQueryResult;
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult;

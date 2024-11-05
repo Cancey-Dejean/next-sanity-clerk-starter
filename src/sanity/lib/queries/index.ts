@@ -1,11 +1,7 @@
 import { defineQuery } from "next-sanity";
-import { headerFields, linkFields, pageFields, postFields } from "./fragments";
+import { linkFields, pageFields, postFields } from "./fragments";
 
 export const settingsQuery = defineQuery(`*[_type == "settings"][0]`);
-
-export const globalsQuery = defineQuery(`
-  ${headerFields}
-`);
 
 export const getPageQuery = defineQuery(`
   *[_type == 'page' && slug.current == $slug][0]{

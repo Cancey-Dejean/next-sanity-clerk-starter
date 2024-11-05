@@ -53,7 +53,6 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export function NavMenu({ primaryMenu }: any) {
-  console.log(primaryMenu);
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -97,19 +96,6 @@ export function NavMenu({ primaryMenu }: any) {
                             {label}
                           </ListItem>
                         ))}
-
-                        {/* <ListItem
-                        href="/docs/installation"
-                        title="Installation"
-                      >
-                        How to install dependencies and structure your app.
-                      </ListItem>
-                      <ListItem
-                        href="/docs/primitives/typography"
-                        title="Typography"
-                      >
-                        Styles for headings, paragraphs, lists...etc
-                      </ListItem> */}
                       </ul>
                     </NavigationMenuContent>
                   </>
@@ -128,31 +114,6 @@ export function NavMenu({ primaryMenu }: any) {
             );
           },
         )}
-
-        {/* <NavigationMenuItem>
-      <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-          {components.map((component) => (
-            <ListItem
-              key={component.title}
-              title={component.title}
-              href={component.href}
-            >
-              {component.description}
-            </ListItem>
-          ))}
-        </ul>
-      </NavigationMenuContent>
-    </NavigationMenuItem> */}
-
-        {/* <NavigationMenuItem>
-      <Link href="/docs" legacyBehavior passHref>
-        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-          Documentation
-        </NavigationMenuLink>
-      </Link>
-    </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
   );

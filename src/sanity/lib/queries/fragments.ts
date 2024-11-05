@@ -16,6 +16,7 @@ export const linkFields = /* groq */ `
 
 export const headerFields = groq`
 "header": *[_type == "header"][0] {
+    showAuth,
     primaryMenu[] {
       _type,
 
@@ -40,8 +41,15 @@ export const headerFields = groq`
   }
 `;
 
+export const footerFields = groq`
+"footer": *[_type == "footer"][0] {
+    title
+  }
+`;
+
 export const ALL_SETTINGS_QUERY = groq`{
   ${headerFields},
+  ${footerFields}
 }`;
 
 export const BUTTON_GROUP_FIELDS = /* groq */ `

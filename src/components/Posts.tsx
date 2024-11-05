@@ -5,6 +5,8 @@ import { Post as PostType } from "@/sanity.types";
 import DateComponent from "./Date";
 import Onboarding from "./Onboarding";
 import { sanityFetch } from "@/sanity/lib/live";
+import PostCard from "./ui/Cards/PostCard";
+import { Post } from "../../sanity.types";
 
 type PostProps = {
   post: PostType;
@@ -76,26 +78,32 @@ export const MorePosts = async ({ skip, limit }: MorePostsProps) => {
 
   return (
     <Posts heading={`Recent blog posts from Sanity (${data?.length})`}>
-      {data?.map((post: any) => <Post key={post._id} post={post} />)}
+      <div className="flex justify-between gap-4">
+        {data?.map((post: Post) => (
+          <Link key={post._id} href={`/posts/${post.slug}`}>
+            {post.title}
+          </Link>
+        ))}
+      </div>
     </Posts>
   );
 };
 
-export const AllPosts = async () => {
-  const { data } = await sanityFetch({ query: allPostsQuery });
+// export const AllPosts = async () => {
+//   const { data } = await sanityFetch({ query: allPostsQuery });
 
-  if (!data || data.length === 0) {
-    return <Onboarding />;
-  }
+//   if (!data || data.length === 0) {
+//     return <Onboarding />;
+//   }
 
-  return (
-    <Posts
-      heading="Blog posts from Sanity"
-      subHeading={`${data.length === 1 ? "This blog post is" : `These ${data.length} blog posts are`} populated from your Sanity Studio.`}
-    >
-      {data.map((post: any) => (
-        <Post key={post._id} post={post} />
-      ))}
-    </Posts>
-  );
-};
+//   return (
+//     <Posts
+//       heading="Blog posts from Sanity"
+//       subHeading={`${data.length === 1 ? "This blog post is" : `These ${data.length} blog posts are`} populated from your Sanity Studio.`}
+//     >
+//       {data.map((post: any) => (
+//         <Post key={post._id} post={post} />
+//       ))}
+//     </Posts>
+//   );
+// };

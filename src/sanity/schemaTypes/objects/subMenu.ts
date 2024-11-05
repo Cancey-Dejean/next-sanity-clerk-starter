@@ -31,29 +31,11 @@ export const subMenuType = defineType({
           title: "Featured Description",
           type: "text",
         }),
-        // defineField({
-        //   name: "featuredImage",
-        //   title: "Featured Image",
-        //   type: "customImage",
-        // }),
-        // defineField({
-        //   name: "featuredDesc",
-        //   title: "Featured Description",
-        //   type: "te",
-        // }),
-        // defineField({
-        //   name: "items",
-        //   title: "Items",
-        //   type: "array",
-        //   of: [
-        //     {
-        //       name: "link",
-        //       title: "Menu Item",
-        //       type: "link",
-        //     },
-        //   ],
-        //   validation: (rule) => rule.min(1).max(3),
-        // }),
+        defineField({
+          name: "featuredImage",
+          title: "Featured Image",
+          type: "customImage",
+        }),
       ],
     }),
     defineField({

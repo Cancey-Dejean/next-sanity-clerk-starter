@@ -76,6 +76,7 @@ export default async function RootLayout({
   });
 
   const { header, footer } = globals;
+  console.log(footer);
   return (
     <div className="grid min-h-[100dvh] grid-rows-[auto_1fr_auto]">
       <Header header={header} />

@@ -15,6 +15,7 @@ import { blockContentType } from "./arrays/blockContentType";
 import { pageType } from "./documents/page";
 import { navLinkType } from "./objects/navLink";
 import { subMenuType } from "./objects/subMenu";
+import { footerType } from "./singletons/footer";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -27,6 +28,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     navLinkType,
     linkType,
     headerType,
+    footerType,
     customImage,
     buttonType,
     subMenuType,

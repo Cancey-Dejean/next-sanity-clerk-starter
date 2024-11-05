@@ -24,7 +24,7 @@ export const postType = defineType({
       to: { type: "author" },
     }),
     defineField({
-      name: "mainImage",
+      name: "featuredImage",
       type: "image",
       options: {
         hotspot: true,

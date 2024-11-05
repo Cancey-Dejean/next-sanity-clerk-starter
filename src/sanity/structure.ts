@@ -18,6 +18,17 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
 
       S.listItem()
+        .title("Footer")
+        .child(
+          S.document()
+            .title("Footer")
+            .schemaType("footer")
+            .documentId("footer"),
+        ),
+
+      S.divider(),
+
+      S.listItem()
         .title("Pages")
         .icon(Menu)
         .child(S.documentList().title("All Pages").filter('_type == "page"')),
@@ -85,8 +96,14 @@ export const structure: StructureResolver = (S) =>
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&
-          !["post", "category", "author", "header", "user", "page"].includes(
-            item.getId()!,
-          ),
+          ![
+            "post",
+            "category",
+            "author",
+            "header",
+            "user",
+            "page",
+            "footer",
+          ].includes(item.getId()!),
       ),
     ]);
