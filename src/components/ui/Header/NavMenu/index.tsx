@@ -52,45 +52,119 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ];
 
-export function NavMenu() {
+export function NavMenu({ primaryMenu }: any) {
+  console.log(primaryMenu);
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-transparent">
-            Getting started
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <Link
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
-                    </p>
-                  </Link>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
+        {primaryMenu?.map(
+          ({
+            _type,
+            label,
+            subMenuLinkGrid,
+            highlightList,
+            linkList,
+            linkMenu,
+          }: any) => {
+            return (
+              <NavigationMenuItem key={label}>
+                {_type === "subMenu" && (
+                  <>
+                    <NavigationMenuTrigger
+                      className="bg-transparent"
+                      key={label}
+                    >
+                      {label}
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="flex flex-col gap-3 p-4 md:w-[200px]">
+                        <ListItem href="/docs" title="Introduction">
+                          Re-usable components built using Radix UI and Tailwind
+                          CSS.
+                        </ListItem>
+                        <ListItem
+                          href="/docs/installation"
+                          title="Installation"
+                        >
+                          How to install dependencies and structure your app.
+                        </ListItem>
+                        <ListItem
+                          href="/docs/primitives/typography"
+                          title="Typography"
+                        >
+                          Styles for headings, paragraphs, lists...etc
+                        </ListItem>
+                      </ul>
+                    </NavigationMenuContent>
+                  </>
+                )}
+
+                {_type === "subMenuHighlight" && (
+                  <>
+                    <NavigationMenuTrigger
+                      className="bg-transparent"
+                      key={label}
+                    >
+                      {label}
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                        <li className="row-span-3">
+                          <NavigationMenuLink asChild>
+                            <Link
+                              className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                              href="/"
+                            >
+                              <div className="mb-2 mt-4 text-lg font-medium">
+                                shadcn/ui
+                              </div>
+                              <p className="text-sm leading-tight text-muted-foreground">
+                                Beautifully designed components built with Radix
+                                UI and Tailwind CSS.
+                              </p>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <ListItem href="/docs" title="Introduction">
+                          Re-usable components built using Radix UI and Tailwind
+                          CSS.
+                        </ListItem>
+                        <ListItem
+                          href="/docs/installation"
+                          title="Installation"
+                        >
+                          How to install dependencies and structure your app.
+                        </ListItem>
+                        <ListItem
+                          href="/docs/primitives/typography"
+                          title="Typography"
+                        >
+                          Styles for headings, paragraphs, lists...etc
+                        </ListItem>
+                      </ul>
+                    </NavigationMenuContent>
+                  </>
+                )}
+
+                {_type === "navLink" && (
+                  <>
+                    <NavigationMenuItem>
+                      <Link href="/docs" legacyBehavior passHref>
+                        <NavigationMenuLink
+                          className={navigationMenuTriggerStyle()}
+                        >
+                          Documentation
+                        </NavigationMenuLink>
+                      </Link>
+                    </NavigationMenuItem>
+                  </>
+                )}
+              </NavigationMenuItem>
+            );
+          },
+        )}
+
+        {/* <NavigationMenuItem>
           <NavigationMenuTrigger>Components</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
@@ -105,14 +179,15 @@ export function NavMenu() {
               ))}
             </ul>
           </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
+        </NavigationMenuItem> */}
+
+        {/* <NavigationMenuItem>
           <Link href="/docs" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Documentation
             </NavigationMenuLink>
           </Link>
-        </NavigationMenuItem>
+        </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
   );

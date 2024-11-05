@@ -1,14 +1,13 @@
-import Hero from "@/components/ui/Hero";
+import HeroOne from "@/components/ui/Heroes/HeroOne";
 
 type Section = {
-  collection: string;
-  id: string;
+  _type: string;
+  _key: string;
 };
 
 export const RenderSections = (section: Section) => {
-  switch (section.collection) {
-    case "block_hero":
-      // @ts-expect-error: No type for item
-      return <Hero {...section} key={section.id} item={section.item} />;
+  switch (section._type) {
+    case "hero":
+      return <HeroOne {...section} key={section._key} />;
   }
 };

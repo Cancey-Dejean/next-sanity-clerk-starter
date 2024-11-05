@@ -1,8 +1,8 @@
 import { Link } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
-export const linkType = defineType({
-  name: "link",
+export const navLinkType = defineType({
+  name: "navLink",
   title: "Link",
   type: "object",
   icon: Link,
@@ -10,6 +10,11 @@ export const linkType = defineType({
     defineField({
       name: "label",
       title: "Label",
+      type: "string",
+    }),
+    defineField({
+      name: "description",
+      title: "Description",
       type: "string",
     }),
     defineField({

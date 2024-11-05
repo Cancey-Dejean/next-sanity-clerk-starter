@@ -4,12 +4,15 @@ import type { Metadata } from "next";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/live";
-import { settingsQuery } from "@/sanity/lib/queries";
+import { globalsQuery, settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 
 import Header from "@/components/ui/Header";
-import Footer from "@/components/Footer";
-import { toPlainText } from "next-sanity";
+
+import { SanityDocument, toPlainText } from "next-sanity";
+import Footer from "@/components/ui/Footer";
+import { client } from "@/sanity/lib/client";
+import { ALL_SETTINGS_QUERY } from "@/sanity/lib/queries/fragments";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: settings } = await sanityFetch({
@@ -47,11 +50,37 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const globals = await client.fetch(globalsQuery, {
+  //   query: globalsQuery,
+  //   // perspective: "published",
+  //   stega: false,
+  // });
+
+  // const globals = await sanityFetch({
+  //   query: globalsQuery,
+  //   stega: false,
+  // });
+
+  // const [{ data: globals }] = await Promise.all([
+  //   sanityFetch({
+  //     query: globalsQuery,
+  //     stega: false,
+  //   }),
+  // ]);
+
+  // const globals = await client.fetch(globalsQuery);
+  // const { header, footer } = globals;
+
+  const { data: globals } = await sanityFetch({
+    query: ALL_SETTINGS_QUERY,
+  });
+
+  const { header, footer } = globals;
   return (
     <div className="grid min-h-[100dvh] grid-rows-[auto_1fr_auto]">
-      <Header />
+      <Header header={header} />
       <main>{children}</main>
-      <Footer />
+      <Footer footer={footer} />
     </div>
   );
 }

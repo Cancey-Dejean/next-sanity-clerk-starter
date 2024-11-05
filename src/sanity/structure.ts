@@ -1,4 +1,4 @@
-import { PenSquare } from "lucide-react";
+import { Menu, PenSquare } from "lucide-react";
 import type { StructureResolver } from "sanity/structure";
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -6,6 +6,24 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title("Dashboard")
     .items([
+      S.listItem()
+        .title("Header")
+        .child(
+          S.document()
+            .title("Header")
+            .schemaType("header")
+            .documentId("header"),
+        ),
+
+      S.divider(),
+
+      S.listItem()
+        .title("Pages")
+        .icon(Menu)
+        .child(S.documentList().title("All Pages").filter('_type == "page"')),
+
+      S.divider(),
+
       S.listItem()
         .title("Posts")
         .icon(PenSquare)
@@ -56,6 +74,8 @@ export const structure: StructureResolver = (S) =>
             ]),
         ),
 
+      S.divider(),
+
       S.documentTypeListItem("user").title("Users"),
 
       // S.documentTypeListItem("post").title("Posts"),
@@ -65,7 +85,7 @@ export const structure: StructureResolver = (S) =>
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&
-          !["post", "category", "author", "header", "user"].includes(
+          !["post", "category", "author", "header", "user", "page"].includes(
             item.getId()!,
           ),
       ),

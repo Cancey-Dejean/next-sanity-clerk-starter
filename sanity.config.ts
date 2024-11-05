@@ -44,7 +44,7 @@ function resolveHref(documentType?: string, slug?: string): string | undefined {
 
 export default defineConfig({
   name: "default",
-  title: "Clean Next.js + Sanity",
+  title: "Sanity Template",
   basePath: "/studio",
   projectId,
   dataset,
@@ -52,6 +52,7 @@ export default defineConfig({
   schema,
   plugins: [
     structureTool({ structure }),
+    visionTool({ defaultApiVersion: apiVersion }),
     presentationTool({
       previewUrl: {
         origin: SANITY_STUDIO_PREVIEW_URL,
@@ -111,10 +112,7 @@ export default defineConfig({
         },
       },
     }),
-    unsplashImageAsset(),
-    // Vision is for querying with GROQ from inside the Studio
-    // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion }),
     media(),
+    unsplashImageAsset(),
   ],
 });

@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+
 import { draftMode } from "next/headers";
 import { VisualEditing, toPlainText } from "next-sanity";
 import { Toaster } from "sonner";
@@ -13,6 +13,7 @@ import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import { LiveErrorBoundary } from "@/components/LiveErrorBoundary";
 import DraftModeToast from "@/components/DraftModeToast";
 import { ClerkProvider } from "@clerk/nextjs";
+import { inter } from "@/utils/fonts";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: settings } = await sanityFetch({
@@ -44,12 +45,6 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   };
 }
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export default async function RootLayout({
   children,

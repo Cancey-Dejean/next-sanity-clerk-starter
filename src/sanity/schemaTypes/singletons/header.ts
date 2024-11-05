@@ -1,5 +1,5 @@
 import { User } from "lucide-react";
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 
 export const headerType = defineType({
   name: "header",
@@ -19,28 +19,38 @@ export const headerType = defineType({
       type: "customImage",
     }),
     defineField({
-      name: "image",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
+      name: "primaryMenu",
+      type: "array",
+      title: "Primary Menu",
+      of: [
+        { type: "navLink" },
+        { type: "subMenu" },
+        { type: "subMenuLinkGrid" },
+        { type: "subMenuHighlight" },
+      ],
     }),
     defineField({
-      name: "bio",
+      name: "cta",
       type: "array",
-      of: [
-        defineArrayMember({
-          type: "block",
-          styles: [{ title: "Normal", value: "normal" }],
-          lists: [],
-        }),
-      ],
+      title: "Call to Action",
+      of: [{ type: "button" }],
+      validation: (Rule) => Rule.max(2),
+    }),
+    defineField({
+      name: "showAuth",
+      title: "Show Auth Buttons",
+      type: "boolean",
+      initialValue: false,
     }),
   ],
   preview: {
     select: {
-      title: "name",
-      media: "image",
+      title: "title",
+    },
+    prepare({ title }) {
+      return {
+        title: title || "Label needs to be set",
+      };
     },
   },
 });

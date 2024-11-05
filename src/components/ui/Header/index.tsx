@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/Button";
 import { NavMenu } from "@/components/ui/Header/NavMenu";
 import { Logo } from "@/components/ui/svgIcons";
 
-export default async function Header() {
+export default async function Header({ header }: any) {
+  const { primaryMenu } = header;
   return (
     <header className="sticky top-0 z-50">
       <Container className="flex items-center justify-between gap-4 py-6">
@@ -21,7 +22,7 @@ export default async function Header() {
         </Link>
 
         <div className="absolute left-1/2 -translate-x-1/2">
-          <NavMenu />
+          <NavMenu primaryMenu={primaryMenu} />
         </div>
 
         <div className="flex items-center gap-4">
