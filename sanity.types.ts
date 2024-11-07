@@ -378,6 +378,61 @@ export type Page = {
   pageBuilder?: PageBlocks;
 };
 
+export type Homepage = {
+  _id: string;
+  _type: "homepage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  body?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }
+  >;
+  pageBuilder?: PageBlocks;
+};
+
 export type Category = {
   _id: string;
   _type: "category";
@@ -515,6 +570,7 @@ export type AllSanitySchemaTypes =
   | Post
   | Author
   | Page
+  | Homepage
   | Category
   | BlockContent
   | SanityImageCrop
@@ -578,6 +634,38 @@ export type ALL_SETTINGS_QUERYResult = {
 // Variable: settingsQuery
 // Query: *[_type == "settings"][0]
 export type SettingsQueryResult = null;
+// Variable: getHomepageQuery
+// Query: *[_type == 'homepage'][0]{      _id,  metaTitle,  metaDescription,  "ogImg": ogImage.asset->url,  "slug": slug.current,  pageBuilder [] {    _type,    _key,    _type == "hero" => {        topText,  headline,  subHeading,  copyPasteText,  hide,    ctaButtons [] {       label,   newTab,   url,   variant,   size  }    },  },  }
+export type GetHomepageQueryResult = {
+  _id: string;
+  metaTitle: string | null;
+  metaDescription: string | null;
+  ogImg: string | null;
+  slug: null;
+  pageBuilder: Array<{
+    _type: "hero";
+    _key: string;
+    topText: string | null;
+    headline: string | null;
+    subHeading: string | null;
+    copyPasteText: string | null;
+    hide: null;
+    ctaButtons: Array<{
+      label: string | null;
+      newTab: boolean | null;
+      url: string | null;
+      variant:
+        | "default"
+        | "destructive"
+        | "ghost"
+        | "link"
+        | "outline"
+        | "secondary"
+        | null;
+      size: "default" | "icon" | "lg" | "sm" | null;
+    }> | null;
+  }> | null;
+} | null;
 // Variable: getPageQuery
 // Query: *[_type == 'page' && slug.current == $slug][0]{      _id,  metaTitle,  metaDescription,  "ogImg": ogImage.asset->url,  "slug": slug.current,  pageBuilder [] {    _type,    _key,    _type == "hero" => {        topText,  headline,  subHeading,  copyPasteText,  hide,    ctaButtons [] {       label,   newTab,   url,   variant,   size  }    },  },  }
 export type GetPageQueryResult = {
@@ -674,6 +762,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '{\n  \n"header": *[_type == "header"][0] {\n    showAuth,\n    primaryMenu[] {\n      _type,\n\n      _type == "navLink" => {\n        \n  label,\n  description,\n  newTab,\n  url,\n\n      },\n\n      _type == "subMenu" => {\n        label,\n        highlightList {\n          featuredTitle,\n          featuredDesc\n        },\n        linkList[] {\n          description,\n          \n  label,\n  description,\n  newTab,\n  url,\n\n        },\n      },\n    },\n    cta [] {\n      \n   label,\n   newTab,\n   url,\n   variant,\n   size\n\n    }\n    // "logoImage": logo.asset->url,\n    // "logoImageAlt": logo.alt,\n  }\n,\n  \n"footer": *[_type == "footer"][0] {\n    title\n  }\n\n}': ALL_SETTINGS_QUERYResult;
     '*[_type == "settings"][0]': SettingsQueryResult;
+    '\n  *[_type == \'homepage\'][0]{\n    \n  _id,\n  metaTitle,\n  metaDescription,\n  "ogImg": ogImage.asset->url,\n  "slug": slug.current,\n  pageBuilder [] {\n    _type,\n    _key,\n    _type == "hero" => {\n      \n  topText,\n  headline,\n  subHeading,\n  copyPasteText,\n  hide,\n  \n  ctaButtons [] {\n    \n   label,\n   newTab,\n   url,\n   variant,\n   size\n\n  }\n\n\n    },\n  }\n,\n  }\n': GetHomepageQueryResult;
     '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    \n  _id,\n  metaTitle,\n  metaDescription,\n  "ogImg": ogImage.asset->url,\n  "slug": slug.current,\n  pageBuilder [] {\n    _type,\n    _key,\n    _type == "hero" => {\n      \n  topText,\n  headline,\n  subHeading,\n  copyPasteText,\n  hide,\n  \n  ctaButtons [] {\n    \n   label,\n   newTab,\n   url,\n   variant,\n   size\n\n  }\n\n\n    },\n  }\n,\n  }\n': GetPageQueryResult;
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult;
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult;
