@@ -16,8 +16,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    linkOneText: "Company Name",
-    linkTwoText: "Documentation",
-    linkThreeText: "Examples",
+    footer: {
+      title: "Footer",
+    },
   },
 };

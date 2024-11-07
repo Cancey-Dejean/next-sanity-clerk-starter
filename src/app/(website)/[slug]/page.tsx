@@ -41,8 +41,6 @@ export default async function Page(props: Props) {
     }),
   ]);
 
-  // console.log(page.pageBuilder[0]);
-
   if (!page?._id) {
     return notFound();
   }

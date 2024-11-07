@@ -10,11 +10,11 @@ import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/Button";
 import { NavMenu } from "@/components/ui/Header/NavMenu";
 import { Logo } from "@/components/ui/svgIcons";
+import { Header as HeaderType } from "../../../../sanity.types";
 
-export default async function Header({ header }: any) {
+export default async function Header({ header }: { header: HeaderType }) {
   const { primaryMenu, showAuth, cta } = header;
 
-  console.log(cta);
   return (
     <header className="sticky top-0 z-50">
       <Container className="flex items-center justify-between gap-4 py-6">
@@ -51,7 +51,7 @@ export default async function Header({ header }: any) {
             <>
               {cta && cta.length > 0 ? (
                 <div className="flex items-center gap-4">
-                  {cta.map(({ label, url, variant }: any) => (
+                  {cta.map(({ label, url, variant }: Buttons) => (
                     <Button key={label} asChild variant={variant}>
                       <Link href={url}>{label}</Link>
                     </Button>

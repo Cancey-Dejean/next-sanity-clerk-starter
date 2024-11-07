@@ -8,6 +8,7 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         className="h-7 rounded-full text-red-500 sm:h-10"
+        {...props}
       >
         <title>Sanity</title>
         <g clipPath="url(#clip0_1_821)">

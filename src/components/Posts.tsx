@@ -1,19 +1,9 @@
-import Link from "next/link";
-
-import { morePostsQuery, allPostsQuery } from "@/sanity/lib/queries";
-import { Post as PostType } from "@/sanity.types";
-import DateComponent from "./Date";
-import Onboarding from "./Onboarding";
+import { morePostsQuery } from "@/sanity/lib/queries";
 import { sanityFetch } from "@/sanity/lib/live";
-import PostCard from "./ui/Cards/PostCard";
-import { Post } from "../../sanity.types";
+import { Post as PostType } from "../../sanity.types";
 
-type PostProps = {
-  post: PostType;
-};
-
-const Post = ({ post }: PostProps) => {
-  const { _id, title, slug, excerpt, date } = post;
+export const Post = (post: PostType) => {
+  const { _id, title } = post;
 
   return (
     <article
@@ -21,19 +11,23 @@ const Post = ({ post }: PostProps) => {
       className="flex max-w-xl flex-col items-start justify-between"
     >
       <div className="text-sm text-gray-500">
-        <DateComponent dateString={date} />
+        {/* <DateComponent dateString={date} />
+         */}{" "}
+        date
       </div>
 
       <h3 className="mt-3 text-2xl font-semibold">
-        <Link
+        {title}
+        {/* <Link
           className="underline transition-colors hover:text-red-500"
           href={`/posts/${slug}`}
         >
-          {title}
-        </Link>
+
+        </Link> */}
       </h3>
       <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
-        {excerpt}
+        {/* {excerpt} */}
+        excerpt
       </p>
     </article>
   );
@@ -79,31 +73,13 @@ export const MorePosts = async ({ skip, limit }: MorePostsProps) => {
   return (
     <Posts heading={`Recent blog posts from Sanity (${data?.length})`}>
       <div className="flex justify-between gap-4">
-        {data?.map((post: Post) => (
-          <Link key={post._id} href={`/posts/${post.slug}`}>
-            {post.title}
-          </Link>
+        {data?.map((post: PostProps) => (
+          // <Link key={post._id} href={`/posts/${post.slug}`}>
+          //   {post.title}
+          // </Link>
+          <p key={post._id}>{post.title}</p>
         ))}
       </div>
     </Posts>
   );
 };
-
-// export const AllPosts = async () => {
-//   const { data } = await sanityFetch({ query: allPostsQuery });
-
-//   if (!data || data.length === 0) {
-//     return <Onboarding />;
-//   }
-
-//   return (
-//     <Posts
-//       heading="Blog posts from Sanity"
-//       subHeading={`${data.length === 1 ? "This blog post is" : `These ${data.length} blog posts are`} populated from your Sanity Studio.`}
-//     >
-//       {data.map((post: any) => (
-//         <Post key={post._id} post={post} />
-//       ))}
-//     </Posts>
-//   );
-// };

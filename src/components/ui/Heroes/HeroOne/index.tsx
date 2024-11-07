@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Buttons } from "@/types";
+
 import { Button } from "@/components/ui/Button";
 import GetStartedCode from "@/components/GetStartedCode";
 import Container from "@/components/ui/container";
+import { Hero } from "../../../../../sanity.types";
 
 export default function HeroOne({
   topText,
@@ -10,13 +11,7 @@ export default function HeroOne({
   subHeading,
   copyPasteText = "copy",
   ctaButtons,
-}: {
-  topText?: string;
-  headline?: string;
-  subHeading?: string;
-  copyPasteText?: string;
-  ctaButtons?: Buttons[];
-}) {
+}: Hero) {
   return (
     <section className="relative bg-gradient-to-r from-red-200 from-0% via-white via-40%">
       <div className="absolute top-0 h-40 w-full bg-gradient-to-b from-white"></div>
@@ -46,7 +41,7 @@ export default function HeroOne({
               {ctaButtons.map(({ label, newTab, url, variant, size }) => (
                 <Button key={label} variant={variant} asChild size={size}>
                   <Link
-                    href={url}
+                    href={url || "/"}
                     target={newTab ? "_blank" : "_self"}
                     rel={newTab ? "noopener noreferrer" : undefined}
                   >

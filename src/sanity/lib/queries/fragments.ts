@@ -91,7 +91,6 @@ export const postFields = /* groq */ `
   "title": coalesce(title, "Untitled"),
   "slug": slug.current,
   excerpt,
-  coverImage,
   "date": coalesce(date, _updatedAt),
   "author": author->{firstName, lastName, picture},
 `;

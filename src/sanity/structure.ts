@@ -56,7 +56,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentTypeList("author")
                     .title("Posts by Author")
-                    .child((authorId: any) =>
+                    .child((authorId: string) =>
                       S.documentList()
                         .title("Posts")
                         .filter('_type == "post" && $authorId == author._ref')
@@ -71,7 +71,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentTypeList("category")
                     .title("Posts by Category")
-                    .child((categoryId: any) =>
+                    .child((categoryId: string) =>
                       S.documentList()
                         .title("Posts")
                         .filter(

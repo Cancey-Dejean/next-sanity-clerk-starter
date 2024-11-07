@@ -1,9 +1,9 @@
 import { client } from "@/sanity/lib/client";
 import { currentUser } from "@clerk/nextjs/server";
-import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
-export const GET = async (req: NextApiRequest) => {
+export const GET = async (req: NextRequest) => {
   const user = await currentUser();
 
   if (!user) {
@@ -19,14 +19,6 @@ export const GET = async (req: NextApiRequest) => {
     email: emailAddresses[0].emailAddress,
   });
 
-  const url = req.url?.split("/create-sanity-user")[0] || "/";
+  const url = req.nextUrl.searchParams.get("redirectUrl") || "/";
   return NextResponse.redirect(url);
 };
-
-// import { currentUser } from "@clerk/nextjs/server";
-// import { NextResponse } from "next/server";
-
-// export const GET = async () => {
-//   const user = await currentUser();
-//   return NextResponse.json({ user });
-// };

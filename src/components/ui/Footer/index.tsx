@@ -1,8 +1,9 @@
 import Container from "@/components/ui/container";
+import { Footer as FooterType } from "../../../../sanity.types";
 
-export default function Footer({ footer }: any) {
+export default function Footer({ footer }: { footer: FooterType }) {
   const { title } = footer;
-  console.log(footer);
+
   return (
     <footer className="border-t border-gray-100 bg-gray-50">
       <Container className="flex flex-col items-center justify-between py-28 lg:flex-row">

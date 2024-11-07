@@ -4,13 +4,14 @@ import { SignIn } from "@clerk/nextjs";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { redirectUrl: string | undefined };
+  searchParams: Promise<{ redirectUrl?: string }>;
 }) {
-  const { redirectUrl } = await searchParams;
+  const params = await searchParams;
+
   return (
     <section className="flex h-full items-center justify-center">
       <Container className="flex items-center justify-center">
-        <SignIn forceRedirectUrl={redirectUrl || "/"} />
+        <SignIn forceRedirectUrl={params.redirectUrl || "/"} />
       </Container>
     </section>
   );
