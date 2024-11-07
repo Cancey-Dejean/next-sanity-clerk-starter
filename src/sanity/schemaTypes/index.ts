@@ -16,11 +16,13 @@ import { pageType } from "./documents/page";
 import { navLinkType } from "./objects/navLink";
 import { subMenuType } from "./objects/subMenu";
 import { footerType } from "./singletons/footer";
+import { homepageType } from "./documents/homepage";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     blockContentType,
     categoryType,
+    homepageType,
     pageType,
     postType,
     authorType,

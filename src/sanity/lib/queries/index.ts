@@ -3,6 +3,12 @@ import { linkFields, pageFields, postFields } from "./fragments";
 
 export const settingsQuery = defineQuery(`*[_type == "settings"][0]`);
 
+export const getHomepageQuery = defineQuery(`
+  *[_type == 'homepage'][0]{
+    ${pageFields},
+  }
+`);
+
 export const getPageQuery = defineQuery(`
   *[_type == 'page' && slug.current == $slug][0]{
     ${pageFields},

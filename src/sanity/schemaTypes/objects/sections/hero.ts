@@ -45,8 +45,20 @@ export const heroType = defineType({
     }),
   ],
   initialValue: {
-    subHeading: "Headline",
-    copyPasteText: "Copy",
+    topText: "A starter template for",
+    headline: "Sanity + Next.js",
+    subHeading:
+      "A starter template for building websites with Sanity and Next.js",
+    ctaButtons: [
+      {
+        _key: "get-started",
+        _type: "button",
+        label: "Get Started",
+        variant: "default",
+        url: "#",
+      },
+    ],
+    copyPasteText: "npm create sanity@latest",
   },
   preview: {
     select: {

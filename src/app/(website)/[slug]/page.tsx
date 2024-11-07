@@ -37,7 +37,7 @@ export default async function Page(props: Props) {
   const [{ data: page }] = await Promise.all([
     sanityFetch({
       query: getPageQuery,
-      params: { slug: params.slug || "home" },
+      params: { slug: params.slug },
     }),
   ]);
 

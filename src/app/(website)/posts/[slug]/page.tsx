@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 import { Suspense } from "react";
 import { sanityFetch } from "@/sanity/lib/live";
@@ -9,6 +10,19 @@ import Container from "@/components/ui/container";
 
 type Props = {
   params: Promise<{ slug: string }>;
+};
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Posts",
+    default: "Posts",
+  },
+  description: "Posts",
+  twitter: {
+    title: "Posts",
+    description: "Posts",
+    card: "summary_large_image",
+  },
 };
 
 export async function generateStaticParams() {

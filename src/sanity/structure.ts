@@ -7,23 +7,12 @@ export const structure: StructureResolver = (S) =>
     .title("Dashboard")
     .items([
       S.listItem()
-        .title("Header")
+        .title("Homepage")
         .child(
           S.document()
-            .title("Header")
-            .schemaType("header")
-            .documentId("header"),
-        ),
-
-      S.divider(),
-
-      S.listItem()
-        .title("Footer")
-        .child(
-          S.document()
-            .title("Footer")
-            .schemaType("footer")
-            .documentId("footer"),
+            .title("Homepage")
+            .schemaType("homepage")
+            .documentId("homepage"),
         ),
 
       S.divider(),
@@ -87,6 +76,36 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
+      S.listItem()
+        .title("Globals")
+        .child(
+          S.list()
+            .title("Global Components")
+            .items([
+              S.listItem()
+                .title("Header")
+                .child(
+                  S.document()
+                    .title("Header")
+                    .schemaType("header")
+                    .documentId("header"),
+                ),
+
+              S.divider(),
+
+              S.listItem()
+                .title("Footer")
+                .child(
+                  S.document()
+                    .title("Footer")
+                    .schemaType("footer")
+                    .documentId("footer"),
+                ),
+            ]),
+        ),
+
+      S.divider(),
+
       S.documentTypeListItem("user").title("Users"),
 
       // S.documentTypeListItem("post").title("Posts"),
@@ -97,12 +116,13 @@ export const structure: StructureResolver = (S) =>
         (item) =>
           item.getId() &&
           ![
+            "homepage",
+            "page",
             "post",
             "category",
             "author",
             "header",
             "user",
-            "page",
             "footer",
           ].includes(item.getId()!),
       ),
