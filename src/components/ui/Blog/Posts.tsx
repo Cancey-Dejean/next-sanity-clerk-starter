@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Post } from "../../../../sanity.types";
 import PostCard from "../Cards/PostCard";
 import { Button } from "../Button";
 import Container from "../container";
+import { PostProps } from "@/types";
 
-export default function Posts({ posts }: { posts: Post[] }) {
+export default function Posts({ posts }: { posts: PostProps[] }) {
   const articlesShown = 3;
   const [loadMore, setLoadMore] = useState(articlesShown);
   const showMoreArticles = () => {
@@ -18,9 +18,9 @@ export default function Posts({ posts }: { posts: Post[] }) {
       <Container>
         <ul className="grid grid-cols-3 gap-8">
           {posts?.length > 0 ? (
-            posts.slice(0, loadMore).map((post) => (
-              <li key={post?._id}>
-                <PostCard {...post} />
+            posts.slice(0, loadMore).map((post, index) => (
+              <li key={index}>
+                <PostCard post={post} />
               </li>
             ))
           ) : (

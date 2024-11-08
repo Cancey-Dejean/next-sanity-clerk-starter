@@ -214,6 +214,45 @@ export type User = {
   email?: string;
 };
 
+export type Author = {
+  _id: string;
+  _type: "author";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  bio?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
 export type Post = {
   _id: string;
   _type: "post";
@@ -222,12 +261,6 @@ export type Post = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  author?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "author";
-  };
   featuredImage?: {
     asset?: {
       _ref: string;
@@ -281,45 +314,6 @@ export type Post = {
         _key: string;
       }
   >;
-};
-
-export type Author = {
-  _id: string;
-  _type: "author";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  slug?: Slug;
-  image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  bio?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
 };
 
 export type Page = {
@@ -567,8 +561,8 @@ export type AllSanitySchemaTypes =
   | Link
   | NavLink
   | User
-  | Post
   | Author
+  | Post
   | Page
   | Homepage
   | Category
@@ -583,7 +577,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries/fragments.ts
 // Variable: ALL_SETTINGS_QUERY
-// Query: {  "header": *[_type == "header"][0] {    showAuth,    primaryMenu[] {      _type,      _type == "navLink" => {          label,  description,  newTab,  url,      },      _type == "subMenu" => {        label,        highlightList {          featuredTitle,          featuredDesc        },        linkList[] {          description,            label,  description,  newTab,  url,        },      },    },    cta [] {         label,   newTab,   url,   variant,   size    }    // "logoImage": logo.asset->url,    // "logoImageAlt": logo.alt,  },  "footer": *[_type == "footer"][0] {    title  }}
+// Query: {  "header": *[_type == "header"][0] {    showAuth,    primaryMenu[] {      _type,      _type == "navLink" => {          label,  description,  newTab,  url,      },      _type == "subMenu" => {        label,        highlightList {          featuredTitle,          featuredDesc        },        linkList[] {          description,            label,  description,  newTab,  url,        },      },    },    cta [] {         label,   newTab,   url,   variant,   size    }    // "logoImage": logo.asset->url,    // "logoImageAlt": logo.alt,  },  "footer": *[_type == "footer"][0] {  _id,  _type,  _createdAt,  _updatedAt,  _rev,  title}}
 export type ALL_SETTINGS_QUERYResult = {
   header: {
     showAuth: boolean | null;
@@ -626,6 +620,11 @@ export type ALL_SETTINGS_QUERYResult = {
     }> | null;
   } | null;
   footer: {
+    _id: string;
+    _type: "footer";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
     title: string | null;
   } | null;
 };
@@ -699,50 +698,25 @@ export type GetPageQueryResult = {
   }> | null;
 } | null;
 // Variable: allPostsQuery
-// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {     _id,  title,  "slug": slug.current  // featuredImage,  // publishedAt,  // body,  // categories[]->{title}  // "author": author->{firstName, lastName, picture},}
 export type AllPostsQueryResult = Array<{
   _id: string;
-  status: "draft" | "published";
-  title: string | "Untitled";
+  title: string | null;
   slug: string | null;
-  excerpt: null;
-  date: null | string;
-  author: {
-    firstName: null;
-    lastName: null;
-    picture: null;
-  } | null;
 }>;
 // Variable: morePostsQuery
-// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  title,  "slug": slug.current  // featuredImage,  // publishedAt,  // body,  // categories[]->{title}  // "author": author->{firstName, lastName, picture},  }
 export type MorePostsQueryResult = Array<{
   _id: string;
-  status: "draft" | "published";
-  title: string | "Untitled";
+  title: string | null;
   slug: string | null;
-  excerpt: null;
-  date: null | string;
-  author: {
-    firstName: null;
-    lastName: null;
-    picture: null;
-  } | null;
 }>;
 // Variable: postQuery
-// Query: *[_type == "post" && slug.current == $slug] [0] {    content[]{    ...,    markDefs[]{      ...,        label,  description,  newTab,  url,    }  },      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "post" && slug.current == $slug][0] {    _id,  title,  "slug": slug.current  // featuredImage,  // publishedAt,  // body,  // categories[]->{title}  // "author": author->{firstName, lastName, picture},}
 export type PostQueryResult = {
-  content: null;
   _id: string;
-  status: "draft" | "published";
-  title: string | "Untitled";
+  title: string | null;
   slug: string | null;
-  excerpt: null;
-  date: null | string;
-  author: {
-    firstName: null;
-    lastName: null;
-    picture: null;
-  } | null;
 } | null;
 // Variable: postPagesSlugs
 // Query: *[_type == "post" && defined(slug.current)]  {"slug": slug.current}
@@ -757,16 +731,15 @@ export type PagesSlugsResult = Array<{
 
 // Query TypeMap
 import "@sanity/client";
-// @ts-expect-error - Extending Sanity client types for custom queries
 declare module "@sanity/client" {
   interface SanityQueries {
-    '{\n  \n"header": *[_type == "header"][0] {\n    showAuth,\n    primaryMenu[] {\n      _type,\n\n      _type == "navLink" => {\n        \n  label,\n  description,\n  newTab,\n  url,\n\n      },\n\n      _type == "subMenu" => {\n        label,\n        highlightList {\n          featuredTitle,\n          featuredDesc\n        },\n        linkList[] {\n          description,\n          \n  label,\n  description,\n  newTab,\n  url,\n\n        },\n      },\n    },\n    cta [] {\n      \n   label,\n   newTab,\n   url,\n   variant,\n   size\n\n    }\n    // "logoImage": logo.asset->url,\n    // "logoImageAlt": logo.alt,\n  }\n,\n  \n"footer": *[_type == "footer"][0] {\n    title\n  }\n\n}': ALL_SETTINGS_QUERYResult;
+    '{\n  \n"header": *[_type == "header"][0] {\n    showAuth,\n    primaryMenu[] {\n      _type,\n\n      _type == "navLink" => {\n        \n  label,\n  description,\n  newTab,\n  url,\n\n      },\n\n      _type == "subMenu" => {\n        label,\n        highlightList {\n          featuredTitle,\n          featuredDesc\n        },\n        linkList[] {\n          description,\n          \n  label,\n  description,\n  newTab,\n  url,\n\n        },\n      },\n    },\n    cta [] {\n      \n   label,\n   newTab,\n   url,\n   variant,\n   size\n\n    }\n    // "logoImage": logo.asset->url,\n    // "logoImageAlt": logo.alt,\n  }\n,\n  \n"footer": *[_type == "footer"][0] {\n  _id,\n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title\n}\n\n}': ALL_SETTINGS_QUERYResult;
     '*[_type == "settings"][0]': SettingsQueryResult;
     '\n  *[_type == \'homepage\'][0]{\n    \n  _id,\n  metaTitle,\n  metaDescription,\n  "ogImg": ogImage.asset->url,\n  "slug": slug.current,\n  pageBuilder [] {\n    _type,\n    _key,\n    _type == "hero" => {\n      \n  topText,\n  headline,\n  subHeading,\n  copyPasteText,\n  hide,\n  \n  ctaButtons [] {\n    \n   label,\n   newTab,\n   url,\n   variant,\n   size\n\n  }\n\n\n    },\n  }\n,\n  }\n': GetHomepageQueryResult;
     '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    \n  _id,\n  metaTitle,\n  metaDescription,\n  "ogImg": ogImage.asset->url,\n  "slug": slug.current,\n  pageBuilder [] {\n    _type,\n    _key,\n    _type == "hero" => {\n      \n  topText,\n  headline,\n  subHeading,\n  copyPasteText,\n  hide,\n  \n  ctaButtons [] {\n    \n   label,\n   newTab,\n   url,\n   variant,\n   size\n\n  }\n\n\n    },\n  }\n,\n  }\n': GetPageQueryResult;
-    '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult;
-    '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult;
-    '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  label,\n  description,\n  newTab,\n  url,\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult;
+    '*[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n   \n  _id,\n  title,\n  "slug": slug.current\n  // featuredImage,\n  // publishedAt,\n  // body,\n  // categories[]->{title}\n  // "author": author->{firstName, lastName, picture},\n\n}': AllPostsQueryResult;
+    '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  "slug": slug.current\n  // featuredImage,\n  // publishedAt,\n  // body,\n  // categories[]->{title}\n  // "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult;
+    '*[_type == "post" && slug.current == $slug][0] {\n  \n  _id,\n  title,\n  "slug": slug.current\n  // featuredImage,\n  // publishedAt,\n  // body,\n  // categories[]->{title}\n  // "author": author->{firstName, lastName, picture},\n\n}': PostQueryResult;
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult;
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult;
   }

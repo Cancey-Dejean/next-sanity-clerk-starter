@@ -10,9 +10,9 @@ import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/Button";
 import { NavMenu } from "@/components/ui/Header/NavMenu";
 import { Logo } from "@/components/ui/svgIcons";
-import { Header as HeaderType } from "../../../../sanity.types";
+import { Buttons, HeaderProps } from "@/types";
 
-export default async function Header({ header }: { header: HeaderType }) {
+export default async function Header({ header }: { header: HeaderProps }) {
   const { primaryMenu, showAuth, cta } = header;
 
   return (

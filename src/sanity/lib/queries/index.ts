@@ -1,5 +1,5 @@
-import { defineQuery } from "next-sanity";
-import { linkFields, pageFields, postFields } from "./fragments";
+import { defineQuery, groq } from "next-sanity";
+import { pageFields, postFields } from "./fragments";
 
 export const settingsQuery = defineQuery(`*[_type == "settings"][0]`);
 
@@ -15,11 +15,16 @@ export const getPageQuery = defineQuery(`
   }
 `);
 
-export const allPostsQuery = defineQuery(`
-  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {
-    ${postFields}
-  }
-`);
+// export const allPostsQuery = defineQuery(`
+//   *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {
+//     ${postFields},
+//   }
+// `);
+
+export const allPostsQuery =
+  defineQuery(`*[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {
+   ${postFields}
+}`);
 
 export const morePostsQuery = defineQuery(`
   *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
@@ -27,18 +32,15 @@ export const morePostsQuery = defineQuery(`
   }
 `);
 
-export const postQuery = defineQuery(`
-  *[_type == "post" && slug.current == $slug] [0] {
-    content[]{
-    ...,
-    markDefs[]{
-      ...,
-      ${linkFields}
-    }
-  },
-    ${postFields}
-  }
-`);
+// export const postQuery = defineQuery(`
+//   *[_type == "post" && slug.current == $slug][0] {
+//     title
+//   },
+// `);
+
+export const postQuery = groq`*[_type == "post" && slug.current == $slug][0] {
+  ${postFields}
+}`;
 
 export const postPagesSlugs = defineQuery(`
   *[_type == "post" && defined(slug.current)]

@@ -7,10 +7,10 @@ export default async function Home() {
   const { data: home } = await sanityFetch({
     query: getHomepageQuery,
   });
-  const pageBuilder = home.pageBuilder;
+  const pageBuilder = home?.pageBuilder;
 
   if (pageBuilder === null) {
     return <AddContent />;
   }
-  return <>{pageBuilder.map(RenderSections)}</>;
+  return <>{pageBuilder?.map(RenderSections)}</>;
 }

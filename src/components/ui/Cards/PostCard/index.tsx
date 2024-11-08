@@ -1,9 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import Link from "next/link";
-import { Post } from "../../../../../sanity.types";
+import { PostProps } from "@/types";
 
-export default function PostCard({ title, slug }: Post) {
+export default function PostCard({ post }: { post: PostProps }) {
+  const { title, slug } = post;
+
   return (
     <Card>
       <CardHeader>

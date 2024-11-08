@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import GetStartedCode from "@/components/GetStartedCode";
 import Container from "@/components/ui/container";
-import { Hero } from "../../../../../sanity.types";
+
+import { HeroOne as Hero } from "@/types";
 
 export default function HeroOne({
   topText,

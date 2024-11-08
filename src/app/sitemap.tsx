@@ -1,7 +1,6 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { allPostsQuery, pagesSlugs } from "@/sanity/lib/queries";
 import type { MetadataRoute } from "next";
-import { Page, Post } from "../../sanity.types";
 
 export const revalidate = 3600; // revalidate at most every hour
 
@@ -11,17 +10,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     sanityFetch({ query: allPostsQuery }),
   ]);
 
-  const page = pages.map((page: Page) => ({
+  const page = pages.map((page: { slug: string | null }) => ({
     url: `${process.env.NEXT_PUBLIC_URL}/${page.slug}`,
     lastModified: new Date(),
-    changeFrequency: "monthly",
+    changeFrequency: "daily" as const,
     priority: 0.5,
   }));
 
-  const post = posts.map((post: Post) => ({
+  const post = posts.map((post: { slug: string | null }) => ({
     url: `${process.env.NEXT_PUBLIC_URL}/posts/${post.slug}`,
     lastModified: new Date(),
-    changeFrequency: "monthly",
+    changeFrequency: "daily" as const,
     priority: 0.5,
   }));
 

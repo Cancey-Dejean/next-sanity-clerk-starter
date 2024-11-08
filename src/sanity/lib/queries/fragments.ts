@@ -46,8 +46,13 @@ export const headerFields = groq`
 
 export const footerFields = groq`
 "footer": *[_type == "footer"][0] {
-    title
-  }
+  _id,
+  _type,
+  _createdAt,
+  _updatedAt,
+  _rev,
+  title
+}
 `;
 
 export const ALL_SETTINGS_QUERY = groq`{
@@ -85,12 +90,22 @@ export const pageFields = /* groq */ `
   }
 `;
 
+// export const postFields = /* groq */ `
+//   _id,
+//   "status": select(_originalId in path("drafts.**") => "draft", "published"),
+//   "title": coalesce(title, "Untitled"),
+//   "slug": slug.current,
+//   excerpt,
+//   "date": coalesce(date, _updatedAt),
+//   // "author": author->{firstName, lastName, picture},
+// `;
 export const postFields = /* groq */ `
   _id,
-  "status": select(_originalId in path("drafts.**") => "draft", "published"),
-  "title": coalesce(title, "Untitled"),
-  "slug": slug.current,
-  excerpt,
-  "date": coalesce(date, _updatedAt),
-  "author": author->{firstName, lastName, picture},
+  title,
+  "slug": slug.current
+  // featuredImage,
+  // publishedAt,
+  // body,
+  // categories[]->{title}
+  // "author": author->{firstName, lastName, picture},
 `;

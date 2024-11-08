@@ -54,3 +54,12 @@ export type PostProps = {
   // featuredImageAlt: string;
   // body: PortableTextBlock[];
 };
+
+export type HeroOne = {
+  topText?: string;
+  headline?: string;
+  subHeading?: string;
+  copyPasteText?: string;
+  ctaButtons?: Buttons[];
+  hide?: boolean;
+};

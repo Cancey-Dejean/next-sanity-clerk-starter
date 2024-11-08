@@ -1,11 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-import { Suspense } from "react";
 import { sanityFetch } from "@/sanity/lib/live";
 import { postPagesSlugs, postQuery } from "@/sanity/lib/queries";
 
-import { MorePosts } from "@/components/Posts";
 import Container from "@/components/ui/container";
 
 type Props = {
@@ -43,27 +41,32 @@ export default async function PostPage(props: Props) {
     }),
   ]);
 
-  if (!post?._id) {
+  console.log(post);
+
+  if (!post) {
     return notFound();
   }
+
+  const { title, slug } = post;
 
   return (
     <>
       <article className="py-20">
         <Container>
-          <div>{post.title}</div>
+          <div>{title}</div>
+          <div>{slug}</div>
         </Container>
       </article>
 
-      <section className="border-t border-gray-100">
+      {/* <section className="border-t border-gray-100">
         <Container className="my-12 grid gap-12 lg:my-24">
           <aside>
             <Suspense>
-              <MorePosts skip={post._id} limit={2} />
+              <MorePosts skip={_id} limit={2} />
             </Suspense>
           </aside>
         </Container>
-      </section>
+      </section> */}
     </>
   );
 }

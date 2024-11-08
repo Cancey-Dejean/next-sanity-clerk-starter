@@ -19,7 +19,7 @@ export function NavMenu({ primaryMenu }: { primaryMenu: PrimaryMenu[] }) {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        {primaryMenu?.map(
+        {primaryMenu.map(
           ({ _type, label, highlightList, linkList }, index: number) => {
             return (
               <NavigationMenuItem key={index}>
